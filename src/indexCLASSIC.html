@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<body style="background-image: url('images/water.png'); background-size:150% 150%; background-repeat:no-repeat">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ungovern</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <div class="topnav">
+    <a href="#index">Home</a>
+    <a href="#deCapital">deCapital</a>
+    <a href="#deCision">deCision</a>
+    <a href="#deTask">deTask</a>
+    <a href="#about">About</a>
+  </div>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center" style="color: white; font-family:baskerville">Ungovern</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+    </div>
+
+  <div class="container-fluid" style="font-family:baskerville regular">
+    <div id="taskForm" class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel">
+          <div class="panel-heading">
+            <h3 class="panel-title">Create a Task</h3>
+          </div>
+          <div class="panel-body">
+            <strong>New Task Description</strong>
+              <input type="text" id="taskDescription"></input><br>
+            <strong>Pay (finney)</strong>
+              <input type="text" id="maxPayAmount"></input><br>
+            <strong>Required Bond (finney)</strong>
+              <input type="text" id="bondAmount"></input><br>
+            <strong>Time Limit (hours)</strong>
+              <input type="text" id="timeLimit"></input><br>
+            <strong>Assign Task to Job</strong>
+              <input type="text" id="taskJobID"></input><br>
+              <!--component of simple blockchain communication test:
+              <strong>Random Thing Test</strong>
+                <input type="text" id="randomThingTest"></input><br>
+              -->
+            <button class="btn btn-default btn-task" type="button" >Create New Task</button>
+            <!--component of simple blockchain communication test:
+            <button class="btn btn-default btn-tester" type="button" >set test string</button>
+            <button class="btn btn-default btn-string-getter" type="button" >get test string</button>
+            -->
+            </div>
+          </div>
+        </div>
+
+
+
+
+      <div class="container-fluid">
+        <div id="taskDisplayer" class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default panel">
+              <div class="panel-heading">
+                <h3 class="panel-title">Explore Tasks</h3>
+              </div>
+              <div class="panel-body">
+                <strong>Browse Tasks by TaskID:</strong>
+                  <input type="text" id="taskID"></input><br>
+                  <strong type="textdisplay" id="taskDescriptionDisplay">Task Description:</strong><br>
+                  <strong type="textdisplay" id="jobIDDisplay">Job ID (Taskset):</strong><br>
+                  <strong type="textdisplay" id="maxPayAmountDisplay">Pay (finney):</strong><br>
+                  <strong type="textdisplay" id="bondAmountDisplay">Required Bond (finney):</strong><br>
+                  <strong type="textdisplay" id="timePostedDisplay">Time Posted:</strong><br>
+                  <strong type="textdisplay" id="timeLimitDisplay">Time Expires:</strong><br>
+                  <strong type="textdisplay" id="taskAcceptorDisplay">Task Assignee:
+                    <font type="textdisplay" size="1" id="taskAcceptorAddress"></font>
+                    </strong><br>
+                  <strong type="textdisplay" id="taskCompleteDisplay">Task Turned In:</strong><br>
+                <button class="btn btn-default btn-accept-task" id="acceptTaskButton" type="button" >Accept Task</button>
+                <button class="btn btn-default btn-task-complete" id="completeTaskButton" type="button" >Turn in Task</button>
+                <!--<button class="btn btn-default btn-get-task" type="button" >Get Task</button>-->
+              </div>
+            </div>
+          </div>
+
+        <div class="container-fluid">
+          <div id="jobForm" class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="panel panel-default panel">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Create a Taskset (Job)</h3>
+                </div>
+                <div class="panel-body">
+                  <strong>New Job Description</strong>
+                    <input type="text" id="jobDescription"></input><br>
+                  <button class="btn btn-default btn-job" type="button" >Create New Job</button>
+                </div>
+              </div>
+            </div>
+
+        <div class="container-fluid">
+          <div id="jobDisplayer" class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="panel panel-default panel">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Explore Tasksets (i.e. Jobs)</h3>
+                </div>
+                <div class="panel-body">
+                  <strong>Browse Jobs by JobID:</strong>
+                    <input type="text" id="jobID"></input><br>
+                  <strong type="textdisplay" id="jobDescriptionDisplay">Job Description:</strong><br>
+                  <strong type="textdisplay" id="jobCreatorDisplay">Job Creator:
+                    <font type="textdisplay" size="1" id="jobCreatorAddress"></font>
+                    </strong><br>
+                  <strong type="textdisplay" id="jobTasksDisplay">Tasks in this Job:</strong><br>
+                </div>
+              </div>
+            </div>
+
+            <!-- This should be closing the four container classes
+            which for whatever reason only layer properly
+            when you don't close one before starting the next. -->
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <div id="deCision" class="container-fluid">
+          <div id="VCG_panel_creator"
+              class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="panel panel-default panel">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Create Voting Panel</h3>
+                </div>
+                <div class="panel-body">
+                  <strong>Voting Panel Name:</strong>
+                    <input type="text" id="panelName"></input><br>
+                  <button class="btn btn-default btn-panel" type="button" >Create New Panel</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid">
+              <div id="VCG_panel_getter" class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="panel panel-default panel">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Explore Voting Panels</h3>
+                    </div>
+                    <div class="panel-body">
+                      <strong>Browse Panels by ID:</strong>
+                        <input type="text" id="panelID"></input><br>
+                      <strong type="textdisplay" id="panelDisplay">Panel Name:</strong><br>
+                      <strong type="textdisplay" id="panelCreatorDisplay">Panel Creator:
+                        <font type="textdisplay" size="1" id="panelCreatorAddress"></font>
+                        </strong><br>
+                      <strong type="textdisplay" id="panelOwnedDisplay">Creator-Managed Panel:</strong><br>
+                      <strong type="textdisplay" id="panelClosedDisplay">Panel Closed:</strong><br>
+                      <strong type="textdisplay" id="panelMembers">Panel Members:
+                        <font type="textdisplay" size="1" id="panelMemberAddresses"></font>
+                        </strong><br>
+                      <strong>Address to Add to Panel:</strong>
+                        <input type="text" id="addressAdd"></input><br>
+                      <button class="btn btn-default btn-addto-panel" type="button" >Add to Panel</button>
+                      <button class="btn btn-default btn-close-panel" type="button" >Close Panel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container-fluid">
+                  <div id="VCG_proposal_creator" class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="panel panel-default panel">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Create Proposal</h3>
+                        </div>
+                        <div class="panel-body">
+                          <strong>Proposal Description:</strong>
+                            <input type="text" id="proposalDescription"></input><br>
+                          <strong>Assign Proposal to Panel ID:</strong>
+                            <input type="text" id="proposalPanelID"></input><br>
+                          <strong>Required Funding (Finney):</strong>
+                            <input type="text" id="requiredFinney"></input><br>
+                          <strong>Proposal Beneficiary Address:</strong>
+                            <input type="text" id="proposalBeneficiary"></input><br>
+                          <button class="btn btn-default btn-submit-proposal" type="button" >Submit</button>
+                        </div>
+                      </div>
+                    </div>
+
+
+          <div class="container-fluid">
+            <div id="VCG_proposal_getter" class="row">
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-default panel">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Explore & Bid on Proposals</h3>
+                  </div>
+                  <div class="panel-body">
+                    <strong>Browse Proposals by ID:</strong>
+                      <input type="text" id="proposalID"></input><br>
+                    <strong type="textdisplay" id="proposalPanelDisplayID">Panel ID:</strong><br>
+                    <strong type="textdisplay" id="proposalDescriptionDisplay">Proposal Description:</strong><br>
+                    <strong type="textdisplay" id="proposalNeededFundingDisplay">Funding (Finney) Needed:</strong><br>
+                    <strong type="textdisplay" id="bidsPlacedDisplay">Bids Currently Submitted:</strong><br>
+                    <strong type="textdisplay" id="proposalPassedDisplay">Passed:</strong><br>
+                    <!-- <strong type="textdisplay" id="fundsCollected">Funds Collected:</strong><br> -->
+                    <strong>Your Bid to Hash:</strong>
+                      <input type="text" id="yourBidToHash"></input><br>
+                    <!-- <strong>Your Hash Secret:</strong>
+                      <input type="text" id="yourHashSecret"></input><br> -->
+                    <button class="btn btn-default btn-submit-bid" type="button" >Submit</button>
+                    <!-- <button class="btn btn-default btn-settle-up" type="button" >Settle Up</button> -->
+                  </div>
+                </div>
+              </div>
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="container-fluid">
+                      <div id="VCG_proposal_getter" class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="panel panel-default panel">
+                            <div class="panel-heading">
+                              <h3 class="panel-title">Reveal Bid</h3>
+                            </div>
+                            <div class="panel-body">
+                              <strong>Proposal Number:</strong>
+                                <input type="text" id="propNumForReveal"></input><br>
+                              <strong>Your Bid:</strong>
+                                <input type="text" id="revealBid"></input><br>
+                              <button class="btn btn-default btn-reveal-bid" type="button" >Reveal</button>
+                            </div>
+                          </div>
+                        </div>
+
+                    <div class="container-fluid">
+                      <div id="user_info" class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="panel panel-default panel">
+                            <div class="panel-heading">
+                              <h3 class="panel-title">User Info</h3>
+                            </div>
+                            <div class="panel-body">
+                              <strong type="textdisplay" id="userAddressTitle">Address:
+                                <font type="textdisplay" size="1" id="userAddress"></font>
+                                </strong><br>
+                              <strong type="textdisplay" id="moneyInWallet">Address Balance:</strong><br>
+                              <!-- <strong type="textdisplay" id="moneyInContract">Balance in Contract:</strong><br> -->
+                              <strong type="textdisplay" id="paidDues">Paid Dues:</strong><br>
+                              <strong type="textdisplay" id="retainedTax">Paid Taxes:</strong><br>
+                              <strong type="textdisplay" id="unpaidDues">Unpaid Dues:</strong><br>
+                              <strong type="textdisplay" id="outstandingTax">Unpaid Taxes:</strong><br>
+                              <strong type="textdisplay" id="proposalsOpen">Open Proposals:</strong><br>
+                              <strong type="textdisplay" id="proposalsClosed">Closed Proposals:</strong><br>
+                              <button class="btn btn-default btn-get-userinfo" type="button" >Refresh</button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container-fluid">
+                          <div id="user_info" class="row">
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <div class="panel panel-default panel">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title">Deposit to/Withdraw from Contract (finney)</h3>
+                                </div>
+                                <div class="panel-body">
+                                  <strong>Amount of Deposit/Withdrawal:</strong>
+                                    <input type="text" id="depositAmount"></input><br>
+                                  <button class="btn btn-default btn-deposit-tocontract" type="button" >Deposit</button>
+                                  <button class="btn btn-default btn-withdraw" type="button" >Withdraw</button>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+
+
+
+
+    <!-- <div id="taskTemplate" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel-pet">
+          <div class="panel-heading">
+            <h3 class="panel-title">Scrappy</h3>
+          </div>
+          <div class="panel-body">
+            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+            <br/><br/>
+            <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
+            <strong>Age</strong>: <span class="pet-age">3</span><br/>
+            <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
+            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
