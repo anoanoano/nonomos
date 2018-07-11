@@ -6,7 +6,7 @@ import "./VCGLib1.sol";
 
 contract VCG_operator {
     using SafeMath for uint256;
-    
+
         //** STORAGE **//
 
         //general
@@ -507,9 +507,17 @@ contract VCG_operator {
         uint256 wholeElectorate = electorateList[proposal.electorateID].memberCount;
         //uint256 excess = SafeMath.sub(senderBid, proposal.fairAmount);
         uint256 balance = postedFunds[_taxee];
+
+
+        /*handle edge case where fairTimesAllButOne exceeds totalMinusSender*/
         //calculate tax for passed proposal
-        uint256 passTax =
-            SafeMath.sub(SafeMath.mul(proposal.fairAmount, wholeElectorate-1), (SafeMath.sub(totalBid, senderBid)));
+        if ((totalBid-senderBid)/(wholeElectorate-1) < proposal.fairAmount) {
+            uint256 passTax =
+                SafeMath.sub(SafeMath.mul(proposal.fairAmount, wholeElectorate-1), (SafeMath.sub(totalBid, senderBid)));
+        } else {
+            passTax = 0;
+        }
+
 
             //gut check
         require (proposal.outcomePassed == true);

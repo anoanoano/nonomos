@@ -188,6 +188,9 @@
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   }
+  .sidediv {
+      padding: 15px;
+  }
   .slideanim {visibility:hidden;}
   .slide {
       animation-name: slide;
@@ -336,10 +339,11 @@
 <div id="console" class="container-fluid text-center bg-grey">
   <h1>NONOMOS CONSOLE</h1>
   <span style="font-size:30px;cursor:pointer" href="#console" onclick="toggleNav()" id="activateConsole">&#9776; ACTIVATE</span><br>
-  <div class="row text-center slideanim">
+  <div class="row text-center">
 
         <!-- Panel Browser -->
     <div class="sidenav" id="selectorSidenav" style="text-align:left">
+      <div class="sidediv">
         <h1>CREATE GROUP</h1><br>
         <strong><span></span>GROUP NAME:</strong><br>
           <input type="text" id="panelName"></input><br>
@@ -362,8 +366,8 @@
           <input style="display:none" type="text" id="addressAdd"></input><br>
         <button style="display:none" id="addToGroupButton"class="btn btn-default btn-addto-panel" type="button" >Add to Group</button><br>
         <button style="display:none" id="closeGroupButton" class="btn btn-default btn-close-panel" type="button" >Close Group</button><br><br>
-
       </div>
+    </div>
 
     <!-- Proposal Browser -->
     <div class="col-sm-6" id="proposalBrowser" style="text-align:left; background-color: #dc5d61; color: white">
@@ -376,7 +380,7 @@
         <p type="textdisplay" style="display:none"  id="proposalDescriptionDisplay">Proposal Description:</p><br>
         <p type="textdisplay" style="display:none"  id="proposalNeededFundingDisplay">Funding (MilliEther) Needed:</p><br>
         <p type="textdisplay" style="display:none"  id="bidsPlacedDisplay">Bids Currently Submitted:</p><br>
-        <p type="textdisplay" style="display:none"  id="proposalPassedDisplay">Passed:</p><br>
+        <p type="textdisplay" style="display:none"  id="proposalPassedDisplay">Passed (timestamp):</p><br>
         <!-- <p type="textdisplay" id="fundsCollected">Funds Collected:</p><br> -->
 
         <strong style="display:none" id="hashBidHeader1"><span></span>SUBMIT HASHED BID:</strong><br>
@@ -388,30 +392,30 @@
 
         <strong style="display:none" id="revealBidHeader"><span></span>REVEAL BID:</strong><br>
         <p style="display:none" id="revealBidHeader2">Proposal Number:</p>
-          <input style="display:none; color:black" type="text" id="propNumForReveal" style="color: black"></input><br>
+          <input style="display:none; color:black" type="text" id="propNumForReveal"></input><br>
         <p style="display:none" id="revealBidHeader3">Your Bid:</p>
-          <input style="display:none; color:black" type="text" id="revealBid" style="color: black"></input><br>
+          <input style="display:none; color:black" type="text" id="revealBid"></input><br>
         <button style="display:none" class="btn btn-default btn-reveal-bid" id="revealBidButton" type="button" >Reveal</button><br><br>
 
     </div>
 
     <div class="col-sm-6" id="groupEditor" style="text-align:left">
 
-      <h1>ADD PROPOSAL</h1><br>
-      <strong><span></span>DEFINE PROPOSAL:</strong><br>
-      <p>Group ID:</p>
-        <input type="text" id="proposalPanelID" style="color: black"></input><br>
-      <p>Proposal Description:</p>
-        <input type="text" id="proposalDescription" style="color: black"></input><br>
-      <p>Required Funding (MilliEther):</p>
-        <input type="text" id="requiredFinney" style="color: black"></input><br>
-      <p>Proposal Beneficiary Address:</p>
-        <input type="text" id="proposalBeneficiary" style="color: black"></input><br>
-      <p>Bid Deadline:</p>
-        <input type="text" id="bidDeadline" style="color: black"></input><br>
-      <p>Reveal Deadline:</p>
-        <input type="text" id="revealDeadline" style="color: black"></input><br>
-      <button class="btn btn-default btn-submit-proposal" type="button" >Create</button><br><br>
+        <h1>ADD PROPOSAL</h1><br>
+        <strong><span></span>DEFINE PROPOSAL:</strong><br>
+        <p>Group ID:</p>
+          <input type="text" id="proposalPanelID" style="color: black"></input><br>
+        <p>Proposal Description:</p>
+          <input type="text" id="proposalDescription" style="color: black"></input><br>
+        <p>Required Funding (MilliEther):</p>
+          <input type="text" id="requiredFinney" style="color: black"></input><br>
+        <p>Proposal Beneficiary Address:</p>
+          <input type="text" id="proposalBeneficiary" style="color: black"></input><br>
+        <p>Bid Deadline:</p>
+          <input type="text" id="bidDeadline" style="color: black"></input><br>
+        <p>Reveal Deadline:</p>
+          <input type="text" id="revealDeadline" style="color: black"></input><br>
+        <button class="btn btn-default btn-submit-proposal" type="button" >Create</button><br><br>
       <!-- </div> -->
     </div>
 
@@ -422,7 +426,8 @@
     </div>
   </div><br> -->
 
-  <div class="rightsidenav" id="selectorRightsidenav" style="text-align:right">
+  <div class="rightsidenav" id="selectorRightsidenav" style="text-align:left">
+  <div class="sidediv">
     <h1>WALLET INFO</h1><br>
     <strong><span></span>YOUR CONNECTED ACCOUNT:</strong><br>
     <p type="textdisplay" id="userAddressTitle">
@@ -437,6 +442,7 @@
     <p type="textdisplay" id="proposalsOpen">Open Proposals:</p><br>
     <p type="textdisplay" id="proposalsClosed">Closed Proposals:</p><br>
     <button class="btn btn-default btn-get-userinfo" type="button" >Refresh</button>
+  </div>
   </div>
 </div>
 </div><br>

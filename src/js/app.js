@@ -501,6 +501,7 @@ App = {
   handlePanelGetter: function() {
     event.preventDefault();
     var panelID = parseInt($('#panelID').val());
+    $('#proposalPanelID').html("something");
 
     App.contracts.VCG_operator.deployed().then(function(instance) {
 
@@ -637,7 +638,7 @@ App = {
               $('#proposalPanelDisplayID').html("Group ID: "+result[1]).show();
               $('#proposalNeededFundingDisplay').html("Funding (MilliEther) Needed: "+(result[2]/1000000000000000)).show();
               $('#bidsPlacedDisplay').html("Bids Currently Submitted: "+(result[6])).show();
-              $('#proposalPassedDisplay').html("Passed: "+(result[7])).show();
+              $('#proposalPassedDisplay').html("Passed: "+(result[10])).show();
               $('#proposalID').css('background-color', '#ABEBC6').show();
 
               $('#hashBidHeader1').show();
