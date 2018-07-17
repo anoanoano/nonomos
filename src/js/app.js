@@ -637,8 +637,8 @@ App = {
               $('#proposalDescriptionDisplay').html("Proposal Description: "+result[0]).show();
               $('#proposalPanelDisplayID').html("Group ID: "+result[1]).show();
               $('#proposalNeededFundingDisplay').html("Funding (MilliEther) Needed: "+(result[2]/1000000000000000)).show();
-              $('#bidsPlacedDisplay').html("Bids Currently Submitted: "+(result[6])).show();
-              $('#proposalPassedDisplay').html("Passed: "+(result[10])).show();
+              $('#bidsPlacedDisplay').html("Bids Currently Submitted: "+(result[4])).show();
+              $('#proposalPassedDisplay').html("Passed: "+(result[8])).show();
               $('#proposalID').css('background-color', '#ABEBC6').show();
 
               $('#hashBidHeader1').show();

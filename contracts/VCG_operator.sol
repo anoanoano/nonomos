@@ -6,7 +6,7 @@ import "./VCGLib1.sol";
 
 contract VCG_operator {
     using SafeMath for uint256;
-
+    
         //** STORAGE **//
 
         //general
@@ -14,14 +14,14 @@ contract VCG_operator {
     VCGLib1.Proposal[] public proposalList;
         //proposal info
     mapping (uint256 => uint256) public proposalElectorateMap;
-    mapping (uint256 => uint256) public proposalBidCounter;
-    mapping (uint256 => uint256) public revealedBids;
+    mapping (uint256 => int256) public proposalBidCounter;
+    mapping (uint256 => int256) public revealedBids;
         //user info
-    mapping (address => uint256) public postedFunds;
-    mapping (address => uint256) public retainedTax;
-    mapping (address => uint256) public outstandingTax;
-    mapping (address => uint256) public paidDues;
-    mapping (address => uint256) public outstandingDues;
+    mapping (address => int256) public postedFunds;
+    mapping (address => int256) public retainedTax;
+    mapping (address => int256) public outstandingTax;
+    mapping (address => int256) public paidDues;
+    mapping (address => int256) public outstandingDues;
     mapping (address => uint32) public fundsLockedUnlessZero;
     mapping (uint256 => mapping(address => bool)) public settleUpRecords;
         //electorate info
@@ -48,7 +48,7 @@ contract VCG_operator {
         //** FUNCTIONS **//
 
     function createProposal (string _proposalDescription,
-        uint256 _neededAmount,
+        int256 _neededAmount,
         uint256 _electorateID,
         uint256 _bidDeadline,
         uint256 _revealDeadline,
@@ -58,7 +58,7 @@ contract VCG_operator {
             VCGLib1.Proposal memory _proposal;
 
             _proposal.proposalDescription = _proposalDescription;
-            _proposal.neededAmount = SafeMath.mul(_neededAmount, 1000000000000000);
+            _proposal.neededAmount = (_neededAmount * 1000000000000000);
             _proposal.electorateID = _electorateID;
             _proposal.beneficiaryAddress = _beneficiaryAddress;
             _proposal.postedTime = now;
@@ -144,8 +144,8 @@ contract VCG_operator {
 
             address voter = msg.sender;
             uint256 electorateKey = proposalList[_proposalID].electorateID;
-            uint256 wholeElectorate = electorateList[electorateKey].memberCount;
-            uint256 fairVal = SafeMath.div(proposalList[_proposalID].neededAmount, wholeElectorate);
+            int256 wholeElectorate = electorateList[electorateKey].memberCount;
+            int256 fairVal = (proposalList[_proposalID].neededAmount / wholeElectorate);
 
             require(electorateList[electorateKey].membershipCheck[voter] == true,
                 "User must be a Group Member to bid.");
@@ -181,9 +181,9 @@ contract VCG_operator {
 
             address voter = msg.sender;
             uint256 proposalID = _proposalID;
-            uint256 amountValued = msg.value;
+            int256 amountValued = int(msg.value);
             uint256 electorateKey = proposalList[proposalID].electorateID;
-            uint256 wholeElectorate = electorateList[electorateKey].memberCount;
+            int256 wholeElectorate = electorateList[electorateKey].memberCount;
 
             require(electorateList[electorateKey].membershipCheck[voter] == true);
             require(electorateList[electorateKey].listComplete == true);
@@ -209,18 +209,10 @@ contract VCG_operator {
 
     }
 
-    function closeBiddingAtDeadline (uint256 __propID)
-        public returns (bool) {
-        //invoke closeVote function
-        //(thus calculating fairAmount and readying proposal for reveal phase)
-        //when time limit is up
-
-    }
-
     function closeVote(uint256 _propID)
-        internal returns (uint256 fairAmount) {
+        internal returns (int256 fairAmount) {
 
-            fairAmount = SafeMath.div(proposalList[_propID].neededAmount, proposalList[_propID].numberOfVotes);
+            fairAmount = (proposalList[_propID].neededAmount / proposalList[_propID].numberOfVotes);
             proposalList[_propID].fairAmount = fairAmount;
 
             return (fairAmount);
@@ -236,7 +228,7 @@ contract VCG_operator {
             return VCGLib1.getContractBalance();
     }
 
-    function revealBid (uint256 _propID, uint256 _bidReveal)
+    function revealBid (uint256 _propID, int256 _bidReveal)
         public payable returns (bool, uint256) {
 
             //check hash, not already revealed, deposit >= bid
@@ -251,8 +243,8 @@ contract VCG_operator {
                 "You may not bid more Ether than you have deposited. Please deposit additional Ether to the contract, and then reveal your Bid.");
 
             //tally up bid
-            proposalList[_propID].bid[msg.sender] += (SafeMath.mul(_bidReveal, 1000000000000000));
-            proposalBidCounter[_propID] += (SafeMath.mul(_bidReveal, 1000000000000000));
+            proposalList[_propID].bid[msg.sender] += (_bidReveal * 1000000000000000);
+            proposalBidCounter[_propID] += (_bidReveal * 1000000000000000);
             revealedBids[_propID] ++;
 
             //keep track of total short bid shortfall
@@ -282,6 +274,14 @@ contract VCG_operator {
 
         }
 
+    function closeBiddingAtDeadline (uint256 __propID)
+        public returns (bool) {
+        //invoke closeVote function
+        //(thus calculating fairAmount and readying proposal for reveal phase)
+        //when time limit is up
+
+    }
+
     function closeRevealingAtDeadline (uint256 __propID)
         public returns (bool) {
         //invoke tallyBid function
@@ -299,10 +299,10 @@ contract VCG_operator {
                 //check if passed
             if (proposalBidCounter[_propID] >= proposalList[_propID].neededAmount) {
                 proposalList[_propID].outcomePassed = true;
-                if (address(this).balance >= proposalBidCounter[_propID]) {
-                    beneficiary.transfer(proposalList[_propID].neededAmount);
+                if (int(address(this).balance) >= proposalBidCounter[_propID]) {
+                    beneficiary.transfer(uint(proposalList[_propID].neededAmount));
                 } else {
-                    beneficiary.transfer(proposalBidCounter[_propID]);
+                    beneficiary.transfer(uint(proposalBidCounter[_propID]));
                 }
             } else {
                 proposalList[_propID].outcomePassed = false;
@@ -332,13 +332,13 @@ contract VCG_operator {
     }
 
     function settleUp(uint256 _propID, address _settlingAddress)
-        internal returns (bool pivotal, bool exceedsFair, bool pswoutbdr, uint256, uint256) {
+        internal returns (bool pivotal, bool exceedsFair, bool pswoutbdr, int256, int256) {
 
 
             //find out what to tax and pay out and execute it
             VCGLib1.Proposal storage proposal = proposalList[_propID];
-            uint256 settlerBid = proposal.bid[_settlingAddress];
-            uint256 totalBid = proposalBidCounter[_propID];
+            int256 settlerBid = proposal.bid[_settlingAddress];
+            int256 totalBid = proposalBidCounter[_propID];
             bool passedWithoutBidder = ((totalBid - settlerBid) > proposal.neededAmount);
             bool passedIfBidderBidFair =
                 ((totalBid - settlerBid + proposal.fairAmount) > proposal.neededAmount);
@@ -373,14 +373,14 @@ contract VCG_operator {
                 //proposal.shortfallTallier += SafeMath.sub(proposal.fairAmount, settlerBid);
 
                 //calculatePassTax(_propID, _settlingAddress);
-                uint256 balance = postedFunds[_settlingAddress];
+                int256 balance = postedFunds[_settlingAddress];
 
                 exceedsFair = false;
                 if (balance >= proposal.fairAmount) {
                     postedFunds[_settlingAddress] -= proposal.fairAmount;
                     paidDues[_settlingAddress] += proposal.fairAmount;
                 } else if (balance < proposal.fairAmount) {
-                    outstandingDues[_settlingAddress] += SafeMath.sub(proposal.fairAmount, settlerBid); //outstandingDues: deficit vs fair, less retained balance
+                    outstandingDues[_settlingAddress] += (proposal.fairAmount - settlerBid); //outstandingDues: deficit vs fair, less retained balance
                     paidDues[_settlingAddress] += balance;
                     postedFunds[_settlingAddress] = 0;
                 }
@@ -422,12 +422,12 @@ contract VCG_operator {
                 && ((exceedsFair == false))) {
                 pivotal = false;
 
-                proposal.shortfallTallier += SafeMath.sub(proposal.fairAmount, settlerBid);
+                proposal.shortfallTallier += (proposal.fairAmount - settlerBid);
                     //**eventually make a function that automatically settles outstandingTax
                     //**when function called
                     /*tax in this situation should be part of bidder shortfall, not all*/
 
-                outstandingDues[_settlingAddress] += SafeMath.sub(proposal.fairAmount, settlerBid); //currently levies whole shortfall as tax
+                outstandingDues[_settlingAddress] += (proposal.fairAmount - settlerBid); //currently levies whole shortfall as tax
                 paidDues[_settlingAddress] += settlerBid;
                 postedFunds[_settlingAddress] -= settlerBid; //reduces balance by retained bid
 
@@ -443,23 +443,19 @@ contract VCG_operator {
     }
 
     function calculateFailTax (uint256 _propID, address _taxee)
-        internal returns (bool, uint256) {
+        internal returns (bool, int256) {
 
             // check
         require(proposal.outcomePassed == false);
 
             //variable setup
         VCGLib1.Proposal storage proposal = proposalList[_propID];
-        uint256 balance = postedFunds[_taxee];
-        uint256 senderBid = proposal.bid[_taxee];
-        uint256 totalBid = proposalBidCounter[_propID];
-        uint256 wholeElectorate = electorateList[proposal.electorateID].memberCount;
-        uint256 failTax =
-            SafeMath.sub((SafeMath.sub(totalBid, senderBid)), (SafeMath.mul(wholeElectorate-1, proposal.fairAmount)));
-            //int versions, there to avoid sending "negative" uint to SafeMath
-        //int256 failTaxInt = int(failTax);
-        //int256 senderBidInt = int(senderBid);
-
+        int256 balance = postedFunds[_taxee];
+        int256 senderBid = proposal.bid[_taxee];
+        int256 totalBid = proposalBidCounter[_propID];
+        int256 wholeElectorate = electorateList[proposal.electorateID].memberCount;
+        int256 failTax =
+            ((totalBid - senderBid) - ((wholeElectorate-1) * proposal.fairAmount));
 
                 /*user pivotal, prop not passed, bid exceeds failtax
                 retain failtax, return rest of bid
@@ -483,7 +479,7 @@ contract VCG_operator {
             //6-12: this should simply zero out balance and add tax-balance to outstandingTax
 
                 retainedTax[_taxee] += balance; //retain whole bid
-                outstandingTax[_taxee] += SafeMath.sub(failTax, balance); //debit tax owed over and above bid
+                outstandingTax[_taxee] += (failTax - balance); //debit tax owed over and above bid
                 postedFunds[_taxee] = 0; //zero out
 
                 return (exceedsFair, failTax);
@@ -502,18 +498,18 @@ contract VCG_operator {
 
             //variable setup
         VCGLib1.Proposal storage proposal = proposalList[_propID];
-        uint256 senderBid = proposal.bid[_taxee];
-        uint256 totalBid = proposalBidCounter[_propID];
-        uint256 wholeElectorate = electorateList[proposal.electorateID].memberCount;
+        int256 senderBid = proposal.bid[_taxee];
+        int256 totalBid = proposalBidCounter[_propID];
+        int256 wholeElectorate = electorateList[proposal.electorateID].memberCount;
         //uint256 excess = SafeMath.sub(senderBid, proposal.fairAmount);
-        uint256 balance = postedFunds[_taxee];
+        int256 balance = postedFunds[_taxee];
 
 
         /*handle edge case where fairTimesAllButOne exceeds totalMinusSender*/
         //calculate tax for passed proposal
         if ((totalBid-senderBid)/(wholeElectorate-1) < proposal.fairAmount) {
-            uint256 passTax =
-                SafeMath.sub(SafeMath.mul(proposal.fairAmount, wholeElectorate-1), (SafeMath.sub(totalBid, senderBid)));
+            int256 passTax =
+                ((proposal.fairAmount * wholeElectorate-1) - (totalBid - senderBid));
         } else {
             passTax = 0;
         }
@@ -524,31 +520,31 @@ contract VCG_operator {
 
                 // user pivotal, prop passed, and bid exceeds fair
             if ((senderBid >= proposal.fairAmount)
-                && (balance >= SafeMath.add(proposal.fairAmount, passTax))) {
+                && (balance >= (proposal.fairAmount + passTax))) {
 
                 bool exceedsFair = true;
-                postedFunds[_taxee] -= SafeMath.add(proposal.fairAmount, passTax); //decredit balance
+                postedFunds[_taxee] -= (proposal.fairAmount + passTax); //decredit balance
                 retainedTax[_taxee] += passTax; //record retained tax
                 paidDues[_taxee] += proposal.fairAmount;
 
                 return (exceedsFair);
 
             } else if ((senderBid >= proposal.fairAmount)
-                && (balance < SafeMath.add(proposal.fairAmount, passTax))) {
+                && (balance < (proposal.fairAmount + passTax))) {
 
                 exceedsFair = true;
 
                 if (balance >= proposal.fairAmount) {
                     paidDues[_taxee] += proposal.fairAmount;
-                    retainedTax[_taxee] += SafeMath.sub(balance, proposal.fairAmount);
+                    retainedTax[_taxee] += (balance - proposal.fairAmount);
                     outstandingTax[_taxee] +=
-                      SafeMath.sub(passTax, SafeMath.sub(balance, proposal.fairAmount));
+                      (passTax - (balance - proposal.fairAmount));
 
                    postedFunds[_taxee] = 0; //clear out balance
 
                 } else if (balance < proposal.fairAmount) {
                     paidDues[_taxee] += balance;
-                    outstandingDues[_taxee] += SafeMath.sub(proposal.fairAmount, balance);
+                    outstandingDues[_taxee] += (proposal.fairAmount - balance);
                     outstandingTax[_taxee] += passTax;
 
                     postedFunds[_taxee] = 0; //clear out balance
@@ -563,7 +559,7 @@ contract VCG_operator {
         public payable returns (uint256) {
 
             require(msg.value == SafeMath.mul(_deposit, 1000000000000000)); //
-            postedFunds[msg.sender] += msg.value;
+            postedFunds[msg.sender] += int(msg.value);
             return msg.value;
 
         }
@@ -571,9 +567,10 @@ contract VCG_operator {
     function()
         public payable {
 
-            postedFunds[msg.sender] += msg.value;
+            postedFunds[msg.sender] += int(msg.value);
 
         }
+
 
     //     //untested function
     // function corralDelinquents(uint256 _electorate, bool _boot)
@@ -613,7 +610,7 @@ contract VCG_operator {
 
         //withdraw ether from contract
 
-    function withdrawEtherFromContract (uint256 _withdrawal)
+    function withdrawEtherFromContract (int256 _withdrawal)
         public payable returns (uint256) {
 
                 //require no pending bid
@@ -621,17 +618,17 @@ contract VCG_operator {
                 //require amount withdrawn less than amount deposited
             require(_withdrawal <= postedFunds[msg.sender]);
                 //remit
-            postedFunds[msg.sender] -= SafeMath.mul(_withdrawal, 1000000000000000);
-            msg.sender.transfer(SafeMath.mul(_withdrawal, 1000000000000000));
+            postedFunds[msg.sender] -= (_withdrawal * 1000000000000000);
+            msg.sender.transfer(uint(_withdrawal * 1000000000000000));
 
         }
 
         //check storage mapping to see how many Ether the user has posted to the contract
 
     function checkEtherSentToContract ()
-        public constant returns (uint256) {
+        public constant returns (int256) {
 
-            uint256 userFunds = postedFunds[msg.sender];
+            int256 userFunds = postedFunds[msg.sender];
             return userFunds;
 
         }

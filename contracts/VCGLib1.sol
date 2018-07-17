@@ -12,7 +12,8 @@ library VCGLib1 {
         mapping (address => bool) membershipCheck;
         uint256 maxNoShows; // this is important.  no showing messes up the system and opens it to exploitation.  must harshly penalize it.
         uint256 perMemberBuyIn;
-        uint256 memberCount;
+            //signed ints
+        int256 memberCount;
 
     }
 
@@ -20,23 +21,24 @@ library VCGLib1 {
 
         string proposalDescription;
         uint256 electorateID;
-        uint256 neededAmount;
-        uint256 fairAmount;
-        //uint256 shortBidShortfallTallier;
-        //uint256 longBidExcessTallier;
-        uint256 shortfallTallier;
-        uint256 shortBidderCount;
-        uint256 numberOfVotes;
+            //signed ints
+        int256 neededAmount;
+        int256 fairAmount;
+        int256 numberOfVotes;
+            //unsigned ints
         uint256 postedTime;
         uint256 bidDeadline;
         uint256 revealDeadline;
         mapping (address => bool) voted;
         mapping (address => bool) revealed;
-        mapping (address => uint256) bid;
+        mapping (address => int256) bid;
         mapping (address => bytes32) hashedBid;
         bool outcomePassed;
         bool resolved;
         address beneficiaryAddress;
+            //currently unused
+        int256 shortfallTallier;
+        uint256 shortBidderCount;
 
     }
 
