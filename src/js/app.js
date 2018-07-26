@@ -951,13 +951,16 @@ App = {
 
                                       instance.fundsLockedUnlessZero(account).then(function(result) {
 
-                                            console.log(result);
+                                            console.log("locked "+result);
                                             $('#proposalsOpen').html("Open Proposals: "+result);
 
-                                            instance.addressProposals(account).then(function(result) {
+                                            instance.closedProposalsGetterByAddress(account).then(function(result) {
 
-                                                  console.log(result);
-                                                  $('#proposalsClosed').html("Closed Proposals: "+result);
+                                                  console.log("test: "+result);
+                                                  var closedProposalsString = result.toString();
+                                                  console.log("test2: "+closedProposalsString);
+                                                  //var parsedClosedProposalsString = closedProposalsString.replaceAll(",", ", ");
+                                                  $('#proposalsClosed').html("Closed Proposals: "+closedProposalsString);
 
 
             }).catch(function(err) {

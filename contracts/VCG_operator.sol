@@ -6,7 +6,7 @@ import "./VCGLib1.sol";
 
 contract VCG_operator {
     using SafeMath for uint256;
-    
+
         //** STORAGE **//
 
         //general
@@ -326,6 +326,7 @@ contract VCG_operator {
             for (uint256 i = 0; i<wholeElectorate; i++) {
                 address _address = electorateList[electorateKey].addressArray[i];
                 if (electorateList[electorateKey].membershipCheck[_address] = true) {
+                    addressProposals[_address].push(_propID);
                     settleUp(_propID, _address);
                 }
             }
@@ -644,6 +645,11 @@ contract VCG_operator {
     function panelProposalsGetter (uint256 _electorateID)
         public constant returns (uint256[]) {
             return (electorateProposals[_electorateID]);
+        }
+
+    function closedProposalsGetterByAddress (address _user)
+        public constant returns (uint256[]) {
+            return (addressProposals[_user]);
         }
 
 }

@@ -877,7 +877,7 @@
                           "name": "this",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2038,
+                          "referencedDeclaration": 2059,
                           "src": "4112:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_VCGLib1_$232",
@@ -1856,7 +1856,7 @@
                           "name": "this",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2038,
+                          "referencedDeclaration": 2059,
                           "src": "4112:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_VCGLib1_$232",
@@ -1988,8 +1988,8 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xc1d8908cfd0814d98319130c77fd324d27c0edd3",
-      "transactionHash": "0x0f4fc36866d2cc9fba45e8c352f651b05787bf07ad0cdde08126707a41a29ce9"
+      "address": "0x0d780ab430c3a67160a07095055ce30e481f39ad",
+      "transactionHash": "0x9e91546660390d5edbd77b8b80d520b1db7e29a319ee604f7a654a4ea442e10e"
     },
     "1530111770093": {
       "events": {},
@@ -2008,8 +2008,32 @@
       "links": {},
       "address": "0x3062bf1dc631f9a9175e37ec3ef2522d9189bf7e",
       "transactionHash": "0x0f4fc36866d2cc9fba45e8c352f651b05787bf07ad0cdde08126707a41a29ce9"
+    },
+    "1532638610503": {
+      "events": {},
+      "links": {},
+      "address": "0x1e08408cc8d2024ed11fe0699f6c1492bf3ea7a1",
+      "transactionHash": "0x0f4fc36866d2cc9fba45e8c352f651b05787bf07ad0cdde08126707a41a29ce9"
+    },
+    "1532640292455": {
+      "events": {},
+      "links": {},
+      "address": "0x0c17480f47ae3182362a53773787db337362b308",
+      "transactionHash": "0xa7533d759896d0365d79673b8142692b2f41d0b0747af38608b36d995f8a0fe4"
+    },
+    "1532641364156": {
+      "events": {},
+      "links": {},
+      "address": "0x1dfa14a5bb77fc0bab5e1da9d5477919b805e109",
+      "transactionHash": "0x0f4fc36866d2cc9fba45e8c352f651b05787bf07ad0cdde08126707a41a29ce9"
+    },
+    "1532645906266": {
+      "events": {},
+      "links": {},
+      "address": "0x65a0785349ef35f53a7bd58d0b1dd8d6f7ec400f",
+      "transactionHash": "0x9b0cf777b4ca5c9850402428b42b556f1656b31f6819e81259c2df40ee88251f"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-07-17T17:29:30.711Z"
+  "updatedAt": "2018-07-26T23:04:32.613Z"
 }

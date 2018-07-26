@@ -10,7 +10,6 @@ module.exports = function(deployer) {
   deployer.deploy(VCGLib1);
   deployer.link(SafeMath, [Supervisor, VCG_operator]);
   deployer.link(Ownable, [Supervisor, VCG_operator]);
-  deployer.link(VCGLib1, [VCG_operator]);
-  deployer.deploy(Supervisor);
+  deployer.link(VCGLib1, [Supervisor, VCG_operator]);
   deployer.deploy(VCG_operator);
 }
