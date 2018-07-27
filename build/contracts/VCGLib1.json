@@ -877,7 +877,7 @@
                           "name": "this",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2059,
+                          "referencedDeclaration": 2071,
                           "src": "4112:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_VCGLib1_$232",
@@ -1856,7 +1856,7 @@
                           "name": "this",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2059,
+                          "referencedDeclaration": 2071,
                           "src": "4112:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_VCGLib1_$232",
@@ -1988,8 +1988,8 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x0d780ab430c3a67160a07095055ce30e481f39ad",
-      "transactionHash": "0x9e91546660390d5edbd77b8b80d520b1db7e29a319ee604f7a654a4ea442e10e"
+      "address": "0xdb097e66b93ae869e4fabff3c51e330b5039303a",
+      "transactionHash": "0x1f833702b8793de41d4754759e94d4b81e6943e84dcb29890dcf55992b416f9e"
     },
     "1530111770093": {
       "events": {},
@@ -2032,8 +2032,14 @@
       "links": {},
       "address": "0x65a0785349ef35f53a7bd58d0b1dd8d6f7ec400f",
       "transactionHash": "0x9b0cf777b4ca5c9850402428b42b556f1656b31f6819e81259c2df40ee88251f"
+    },
+    "1532650025268": {
+      "events": {},
+      "links": {},
+      "address": "0x0163a6a65fec200976fc54057830642c440cb02b",
+      "transactionHash": "0x1f833702b8793de41d4754759e94d4b81e6943e84dcb29890dcf55992b416f9e"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-07-26T23:04:32.613Z"
+  "updatedAt": "2018-07-27T00:07:41.802Z"
 }

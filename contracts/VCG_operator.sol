@@ -212,10 +212,13 @@ contract VCG_operator {
     function closeVote(uint256 _propID)
         internal returns (int256 fairAmount) {
 
-            fairAmount = (proposalList[_propID].neededAmount / proposalList[_propID].numberOfVotes);
-            proposalList[_propID].fairAmount = fairAmount;
+          uint256 electorateKey = proposalList[_propID].electorateID;
+          int256 wholeElectorate = electorateList[electorateKey].memberCount;
 
-            return (fairAmount);
+          fairAmount = (proposalList[_propID].neededAmount / wholeElectorate);
+          proposalList[_propID].fairAmount = fairAmount;
+
+          return (fairAmount);
 
         }
 
@@ -510,7 +513,7 @@ contract VCG_operator {
         //calculate tax for passed proposal
         if ((totalBid-senderBid)/(wholeElectorate-1) < proposal.fairAmount) {
             int256 passTax =
-                ((proposal.fairAmount * wholeElectorate-1) - (totalBid - senderBid));
+                ((proposal.fairAmount * (wholeElectorate-1)) - (totalBid - senderBid));
         } else {
             passTax = 0;
         }
